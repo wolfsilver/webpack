@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Button } from 'antd';
+import logo from '../images/logo.svg';
+import '../css/App.css';
+import "../css/antd.css";
 
 class App extends Component {
   render() {
@@ -10,6 +12,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
+            <Button type="primary">Button</Button>
           </p>
           <a
             className="App-link"
