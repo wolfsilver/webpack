@@ -35,8 +35,8 @@ const createDevServerConfig = require('../config/webpackDevServer.config');
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
-const fileEntry = Object.keys(paths.dirs).map((key) => {
-  return paths.dirs[key];
+const fileEntry = Object.keys(paths.dirs.dirs).map((key) => {
+  return paths.dirs.dirs[key];
 })
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, ...fileEntry])) {
@@ -117,7 +117,7 @@ checkBrowsers(paths.appPath, isInteractive)
         clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
-      Object.keys(paths.dirs).forEach((key, index) => {
+      Object.keys(paths.dirs.dirs).forEach((key, index) => {
         console.log(chalk.green(`页面地址${index}:      ${urls.localUrlForTerminal}${key}.html`));
       })
       openBrowser(urls.localUrlForBrowser);

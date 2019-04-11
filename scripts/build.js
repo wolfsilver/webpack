@@ -39,8 +39,8 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
 const isInteractive = process.stdout.isTTY;
 
-const fileEntry = Object.keys(paths.dirs).map((key) => {
-  return paths.dirs[key];
+const fileEntry = Object.keys(paths.dirs.dirs).map((key) => {
+  return paths.dirs.dirs[key];
 })
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, ...fileEntry])) {

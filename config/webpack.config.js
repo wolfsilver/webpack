@@ -117,11 +117,11 @@ module.exports = function(webpackEnv) {
   function setup () {
     const entry = {};
     const plugins = [];
-    Object.keys(paths.dirs).forEach((key) => {
+    Object.keys(paths.dirs.dirs).forEach((key) => {
       entry[key] = [
         isEnvDevelopment &&
         require.resolve('react-dev-utils/webpackHotDevClient'),
-        paths.dirs[key]
+        paths.dirs.dirs[key]
       ].filter(Boolean)
 
 
@@ -131,7 +131,7 @@ module.exports = function(webpackEnv) {
           {
             chunks: [key],
             inject: true,
-            template: paths.appHtml,
+            template: paths.dirs.template[key] || paths.appHtml,
             filename: `${key}.html`
           },
           isEnvProduction

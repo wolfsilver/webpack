@@ -28,16 +28,24 @@ function ensureSlash(inputPath, needsSlash) {
 function Scan () {
   const dirs = fs.readdirSync(resolveApp('src/'));
   const map = {};
+  const template = {};
   dirs.forEach((file) => {
     const state = fs.statSync(resolveApp('src/' + file))
-    if (state.isFile() && file.match(/.js$/)) {
-      map[file.replace(/.js$/, '')] = resolveApp('src/' + file)
+    if (state.isFile()) {
+      if (file.match(/.js$/)) {
+        map[file.replace(/.js$/, '')] = resolveApp('src/' + file)
+      } else if (file.match(/.html$/)) {
+        template[file.replace(/.html$/, '')] = resolveApp('src/' + file)
+      }
     }
     // if (state.isDirectory()) {
     //   map[file] = resolveApp('src/' + file) + '/index.js'
     // }
   })
-  return map
+  return {
+    dirs: map,
+    template
+  }
 }
 const dirs = Scan();
 
