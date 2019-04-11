@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button } from 'antd';
 import logo from '../images/logo.svg';
 import '../css/App.css';
-import "../css/antd.css";
 
 class App extends Component {
   render() {

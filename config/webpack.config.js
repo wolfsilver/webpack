@@ -124,12 +124,35 @@ module.exports = function(webpackEnv) {
         paths.dirs[key]
       ].filter(Boolean)
 
-      const newPlugins = new HtmlWebpackPlugin({
-        chunks: [key],
-        inject: true,
-        template: paths.appHtml,
-        filename: `${key}.html`
-      })
+
+      const newPlugins = new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            chunks: [key],
+            inject: true,
+            template: paths.appHtml,
+            filename: `${key}.html`
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      )
+
 
       plugins.push(newPlugins);
     })
@@ -179,7 +202,7 @@ const Setup = setup(); //这里要注意要运行一次！
       // In development, it does not produce real files.
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+        : isEnvDevelopment && 'static/js/[name].bundle.js',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'

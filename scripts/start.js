@@ -35,8 +35,11 @@ const createDevServerConfig = require('../config/webpackDevServer.config');
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
+const fileEntry = Object.keys(paths.dirs).map((key) => {
+  return paths.dirs[key];
+})
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+if (!checkRequiredFiles([paths.appHtml, ...fileEntry])) {
   process.exit(1);
 }
 
