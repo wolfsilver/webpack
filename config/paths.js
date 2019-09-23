@@ -1,4 +1,3 @@
-'use strict';
 
 const path = require('path');
 const fs = require('fs');
@@ -25,15 +24,16 @@ function ensureSlash(inputPath, needsSlash) {
 /**
  * 扫描函数
  */
-function Scan () {
-  const dirs = fs.readdirSync(resolveApp('src/'));
-  const map = {};
+function scanEntries () {
+  const entryFolder = fs.readdirSync(resolveApp('src/'));
+
+  const entries = {};
   const template = {};
-  dirs.forEach((file) => {
+  entryFolder.forEach((file) => {
     const state = fs.statSync(resolveApp('src/' + file))
     if (state.isFile()) {
-      if (file.match(/.js$/)) {
-        map[file.replace(/.js$/, '')] = resolveApp('src/' + file)
+      if (file.match(/.(js|ts|tsx)$/)) {
+        entries[file.replace(/.(js|ts|tsx)$/, '')] = resolveApp('src/' + file)
       } else if (file.match(/.html$/)) {
         template[file.replace(/.html$/, '')] = resolveApp('src/' + file)
       }
@@ -43,11 +43,11 @@ function Scan () {
     // }
   })
   return {
-    dirs: map,
+    entries,
     template
   }
 }
-const dirs = Scan();
+const appEntries = scanEntries();
 
 const getPublicUrl = appPackageJson =>
   envPublicUrl || require(appPackageJson).homepage;
@@ -103,13 +103,14 @@ module.exports = {
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
+  appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  dirs
+  appEntries,
 };
 
 

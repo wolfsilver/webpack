@@ -1,6 +1,9 @@
 ## webpack 多入口react（antd）开发配置
 
 
+## 设置首页地址
+
+在package.json中设置首页地址`homepage`.
 ### `npm start`
 
 开发模式启动应用.<br>
@@ -19,4 +22,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### `src/js`
 
-入口文件目录。跟路径下js会生成响应页面。
+入口文件目录。跟路径下js/ts/tsx会生成相应页面。
